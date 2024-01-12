@@ -1,7 +1,7 @@
 import '../../domain.dart';
 
 abstract class CreateNoteUseCase {
-  /// Create a Note.
+  /// Create a NoteEntity.
   Future<void> createNote({required NoteEntity noteEntity});
 }
 

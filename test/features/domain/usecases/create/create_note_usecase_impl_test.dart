@@ -16,7 +16,7 @@ void main() {
     );
   });
 
-  test('Should create a Note from the createNoteRepository.', () async {
+  test('Should create a Note from the CreateNoteRepository.', () async {
     final mockNoteEntity = NoteEntity();
 
     when(() => mockCreateNoteRepository.createNote(noteEntity: mockNoteEntity))
