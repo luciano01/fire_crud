@@ -12,7 +12,7 @@ void main() {
     mockCreateNoteRepository = MockCreateNoteRepository();
   });
 
-  test('Should return a DocumentReference.', () async {
+  test('Should create a NoteEntity.', () async {
     final mockNoteEntity = NoteEntity();
 
     when(() => mockCreateNoteRepository.createNote(noteEntity: mockNoteEntity))
