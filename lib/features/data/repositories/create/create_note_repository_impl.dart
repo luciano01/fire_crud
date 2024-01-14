@@ -9,6 +9,6 @@ class CreateNoteRepositoryImpl implements CreateNoteRepository {
 
   @override
   Future<void> createNote({required NoteModel noteModel}) async {
-    throw UnimplementedError();
+    await _createNoteDataSource.createNote(noteModel: noteModel);
   }
 }

@@ -21,5 +21,10 @@ void main() {
 
     when(() => mockCreateNoteDataSource.createNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());
+
+    await createNoteRepositoryImpl.createNote(noteModel: mockNoteModel);
+
+    verify(() => mockCreateNoteDataSource.createNote(noteModel: mockNoteModel));
+    verifyNoMoreInteractions(mockCreateNoteDataSource);
   });
 }
