@@ -1,0 +1,14 @@
+import '../../../domain/domain.dart';
+import '../../data.dart';
+
+class UpdateNoteRepositoryImpl implements UpdateNoteRepository {
+  final UpdateNoteDataSource _updateNoteDataSource;
+
+  UpdateNoteRepositoryImpl({required UpdateNoteDataSource updateNoteDataSource})
+      : _updateNoteDataSource = updateNoteDataSource;
+
+  @override
+  Future<void> updateNote({required NoteModel noteModel}) async {
+    return await _updateNoteDataSource.updateNote(noteModel: noteModel);
+  }
+}
