@@ -1,6 +1,6 @@
-import '../../domain.dart';
+import '../../../data/data.dart';
 
 abstract class UpdateNoteRepository {
-  /// Update a NoteEntity.
-  Future<void> updateNote({required NoteEntity noteEntity});
+  /// Update a NoteModel.
+  Future<void> updateNote({required NoteModel noteModel});
 }

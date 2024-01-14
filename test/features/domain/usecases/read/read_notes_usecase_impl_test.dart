@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:fire_crud/features/data/data.dart';
 import 'package:fire_crud/features/domain/domain.dart';
 
 class MockReadNotesRepository extends Mock implements ReadNotesRepository {}
@@ -16,9 +17,9 @@ void main() {
     );
   });
 
-  test('Should a List of NotesEntity from Repository.', () async {
+  test('Should a List of NoteModel from Repository.', () async {
     final mockListOfNotes = [
-      NoteEntity(),
+      NoteModel(),
     ];
 
     when(() => mockReadNotesRepository.readNotes())
@@ -26,6 +27,6 @@ void main() {
 
     final result = readNotesUseCaseImp.readNotes();
 
-    expect(result, isA<Stream<List<NoteEntity>>>());
+    expect(result, isA<Stream<List<NoteModel>>>());
   });
 }

@@ -1,6 +1,6 @@
-import '../../domain.dart';
+import '../../../data/data.dart';
 
 abstract class DeleteNoteRepository {
-  /// Delete a NoteEntity.
-  Future<void> deleteNote({required NoteEntity noteEntity});
+  /// Delete a NoteModel.
+  Future<void> deleteNote({required NoteModel noteModel});
 }

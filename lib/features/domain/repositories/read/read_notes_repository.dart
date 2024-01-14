@@ -1,6 +1,6 @@
-import 'package:fire_crud/features/domain/domain.dart';
+import '../../../data/data.dart';
 
 abstract class ReadNotesRepository {
-  /// Return a List of NoteEntity.
-  Stream<List<NoteEntity>> readNotes();
+  /// Return a List of NoteModel.
+  Stream<List<NoteModel>> readNotes();
 }

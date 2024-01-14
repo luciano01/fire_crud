@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:fire_crud/features/data/data.dart';
 import 'package:fire_crud/features/domain/domain.dart';
 
 class MockUpdateNoteRepository extends Mock implements UpdateNoteRepository {}
@@ -16,16 +17,16 @@ void main() {
     );
   });
 
-  test('Should update a NoteEntity from UpdateNoteRepository.', () async {
-    final mockNoteEntity = NoteEntity();
+  test('Should update a NoteModel from UpdateNoteRepository.', () async {
+    final mockNoteModel = NoteModel();
 
-    when(() => mockUpdateNoteRepository.updateNote(noteEntity: mockNoteEntity))
+    when(() => mockUpdateNoteRepository.updateNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());
 
-    await updateNoteUseCaseImpl.updateNote(noteEntity: mockNoteEntity);
+    await updateNoteUseCaseImpl.updateNote(noteModel: mockNoteModel);
 
     verify(
-      () => mockUpdateNoteRepository.updateNote(noteEntity: mockNoteEntity),
+      () => mockUpdateNoteRepository.updateNote(noteModel: mockNoteModel),
     );
     verifyNoMoreInteractions(mockUpdateNoteRepository);
   });

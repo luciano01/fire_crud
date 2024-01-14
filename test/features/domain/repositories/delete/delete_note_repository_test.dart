@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:fire_crud/features/data/data.dart';
 import 'package:fire_crud/features/domain/domain.dart';
 
 class MockDeleteNoteRepository extends Mock implements DeleteNoteRepository {}
@@ -12,16 +13,16 @@ void main() {
     mockDeleteNoteRepository = MockDeleteNoteRepository();
   });
 
-  test('Should delete a NoteEntity.', () async {
-    final mockNoteEntity = NoteEntity();
+  test('Should delete a NoteModel.', () async {
+    final mockNoteModel = NoteModel();
 
-    when(() => mockDeleteNoteRepository.deleteNote(noteEntity: mockNoteEntity))
+    when(() => mockDeleteNoteRepository.deleteNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());
 
-    await mockDeleteNoteRepository.deleteNote(noteEntity: mockNoteEntity);
+    await mockDeleteNoteRepository.deleteNote(noteModel: mockNoteModel);
 
     verify(
-      () => mockDeleteNoteRepository.deleteNote(noteEntity: mockNoteEntity),
+      () => mockDeleteNoteRepository.deleteNote(noteModel: mockNoteModel),
     );
     verifyNoMoreInteractions(mockDeleteNoteRepository);
   });

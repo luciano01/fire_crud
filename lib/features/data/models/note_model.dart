@@ -1,19 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/domain.dart';
+class NoteModel {
+  final String? uid;
+  final String? name;
+  final bool? isCompleted;
+  final DateTime? date;
 
-class NoteModel extends NoteEntity {
   NoteModel({
-    final String? uid,
-    final String? name,
-    final bool? isCompleted,
-    final DateTime? date,
-  }) : super(
-          uid: uid,
-          name: name,
-          isCompleted: isCompleted ?? false,
-          date: date,
-        );
+    this.uid,
+    this.name,
+    this.isCompleted,
+    this.date,
+  });
 
   factory NoteModel.fromJson(DocumentSnapshot snapshot) {
     return NoteModel(

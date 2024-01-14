@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:fire_crud/features/data/data.dart';
 import 'package:fire_crud/features/domain/domain.dart';
 
 class MockCreateNoteRepository extends Mock implements CreateNoteRepository {}
@@ -16,16 +17,15 @@ void main() {
     );
   });
 
-  test('Should create a Note from the CreateNoteRepository.', () async {
-    final mockNoteEntity = NoteEntity();
+  test('Should create a NoteModel from the CreateNoteRepository.', () async {
+    final mockNoteModel = NoteModel();
 
-    when(() => mockCreateNoteRepository.createNote(noteEntity: mockNoteEntity))
+    when(() => mockCreateNoteRepository.createNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value);
 
-    await createNoteUseCaseImpl.createNote(noteEntity: mockNoteEntity);
+    await createNoteUseCaseImpl.createNote(noteModel: mockNoteModel);
 
-    verify(
-        () => mockCreateNoteRepository.createNote(noteEntity: mockNoteEntity));
+    verify(() => mockCreateNoteRepository.createNote(noteModel: mockNoteModel));
     verifyNoMoreInteractions(mockCreateNoteRepository);
   });
 }

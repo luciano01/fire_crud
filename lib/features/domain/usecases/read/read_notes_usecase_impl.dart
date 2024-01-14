@@ -1,8 +1,9 @@
-import 'package:fire_crud/features/domain/domain.dart';
+import '../../domain.dart';
+import '../../../data/data.dart';
 
 abstract class ReadNotesUseCase {
-  /// Return a List of NoteEntity.
-  Stream<List<NoteEntity>> readNotes();
+  /// Return a List of NoteModel.
+  Stream<List<NoteModel>> readNotes();
 }
 
 class ReadNotesUseCaseImp implements ReadNotesUseCase {
@@ -12,7 +13,7 @@ class ReadNotesUseCaseImp implements ReadNotesUseCase {
       : _readNotesRepository = readNotesRepository;
 
   @override
-  Stream<List<NoteEntity>> readNotes() {
+  Stream<List<NoteModel>> readNotes() {
     return _readNotesRepository.readNotes();
   }
 }

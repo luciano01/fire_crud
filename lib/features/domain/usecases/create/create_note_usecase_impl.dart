@@ -1,8 +1,9 @@
+import '../../../data/data.dart';
 import '../../domain.dart';
 
 abstract class CreateNoteUseCase {
   /// Create a NoteEntity.
-  Future<void> createNote({required NoteEntity noteEntity});
+  Future<void> createNote({required NoteModel noteModel});
 }
 
 class CreateNoteUseCaseImpl implements CreateNoteUseCase {
@@ -12,7 +13,7 @@ class CreateNoteUseCaseImpl implements CreateNoteUseCase {
       : _createNoteRepository = createNoteRepository;
 
   @override
-  Future<void> createNote({required NoteEntity noteEntity}) async {
-    await _createNoteRepository.createNote(noteEntity: noteEntity);
+  Future<void> createNote({required NoteModel noteModel}) async {
+    await _createNoteRepository.createNote(noteModel: noteModel);
   }
 }
