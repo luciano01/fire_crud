@@ -15,7 +15,7 @@ class UpdateNoteDataSourceImpl implements UpdateNoteDataSource {
         _firebaseFirestore.collection("notes").doc(noteModel.uid).id;
 
     if (noteModel.uid != null && noteUid.isNotEmpty) {
-      return _firebaseFirestore
+      await _firebaseFirestore
           .collection("notes")
           .doc(noteModel.uid)
           .update(noteModel.toJson());

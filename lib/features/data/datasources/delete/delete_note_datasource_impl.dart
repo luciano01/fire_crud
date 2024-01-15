@@ -15,7 +15,7 @@ class DeleteNoteDataSourceImpl implements DeleteNoteDataSource {
         _firebaseFirestore.collection("notes").doc(noteModel.uid).id;
 
     if (noteModel.uid != null && noteModelUid.isNotEmpty) {
-      return _firebaseFirestore.collection("notes").doc(noteModel.uid).delete();
+      await _firebaseFirestore.collection("notes").doc(noteModel.uid).delete();
     } else {
       throw ServerException(errorMessage: "Error to delete a NoteModel.");
     }

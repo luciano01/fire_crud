@@ -9,6 +9,6 @@ class UpdateNoteRepositoryImpl implements UpdateNoteRepository {
 
   @override
   Future<void> updateNote({required NoteModel noteModel}) async {
-    return await _updateNoteDataSource.updateNote(noteModel: noteModel);
+    await _updateNoteDataSource.updateNote(noteModel: noteModel);
   }
 }
