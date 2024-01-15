@@ -4,7 +4,7 @@ class NoteModel {
   final String? uid;
   final String? name;
   final bool? isCompleted;
-  final DateTime? date;
+  final Timestamp? date;
 
   NoteModel({
     this.uid,
@@ -18,7 +18,7 @@ class NoteModel {
       uid: snapshot.id,
       name: snapshot.get('name') ?? "",
       isCompleted: snapshot.get('isCompleted') ?? false,
-      date: snapshot.get('date') ?? DateTime.now(),
+      date: snapshot.get('date') ?? Timestamp.fromDate(DateTime.now()),
     );
   }
 
@@ -26,7 +26,7 @@ class NoteModel {
     return {
       'name': name ?? "",
       'isCompleted': isCompleted ?? false,
-      'date': date ?? DateTime.now(),
+      'date': date ?? Timestamp.fromDate(DateTime.now()),
     };
   }
 
@@ -34,7 +34,7 @@ class NoteModel {
     String? uid,
     String? name,
     bool? isCompleted,
-    DateTime? date,
+    Timestamp? date,
   }) =>
       NoteModel(
         uid: uid ?? this.uid,
