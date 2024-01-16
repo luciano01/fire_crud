@@ -19,7 +19,38 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomePage'),
+        leading: Icon(
+          Icons.account_circle,
+          color: Colors.grey.shade900,
+        ),
+        centerTitle: false,
+        title: RichText(
+          text: TextSpan(
+            text: 'Hello, ',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey.shade700,
+                ),
+            children: [
+              TextSpan(
+                text: 'Luciano',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.grey.shade900,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.grey.shade900,
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Observer(builder: (_) {
         List<NoteModel>? listOfNotes = homeState.listOfNotes!.value;
@@ -37,9 +68,41 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             NoteModel noteModel = listOfNotes[index];
             return ListTile(
-              title: Text(noteModel.name ?? "No Name"),
-              subtitle: Text(noteModel.date?.toDate().toString() ?? "No Date"),
-              trailing: Text(noteModel.isCompleted.toString()),
+              leading: IconButton(
+                icon: noteModel.isCompleted ?? false
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Colors.yellow.shade800,
+                      )
+                    : Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.yellow.shade800,
+                      ),
+                onPressed: () {},
+              ),
+              trailing: Text(
+                noteModel.date!.toDate().toString(),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 10,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.grey.shade700,
+                      decoration: noteModel.isCompleted ?? false
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+              ),
+              title: Text(
+                noteModel.name ?? "",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 16,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.grey.shade900,
+                      decoration: noteModel.isCompleted ?? false
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+              ),
+              onTap: () {},
             );
           },
         );
