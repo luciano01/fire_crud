@@ -14,11 +14,31 @@ class HomeModule extends Module {
         firebaseFirestore: i.get<FirebaseFirestore>(),
       ),
     );
+    i.add<UpdateNoteDataSource>(
+      () => UpdateNoteDataSourceImpl(
+        firebaseFirestore: i.get<FirebaseFirestore>(),
+      ),
+    );
+    i.add<DeleteNoteDataSource>(
+      () => DeleteNoteDataSourceImpl(
+        firebaseFirestore: i.get<FirebaseFirestore>(),
+      ),
+    );
 
     /// Repositories injections.
     i.add<ReadNotesRepository>(
       () => ReadNotesRepositoryImpl(
         readNotesDataSource: i.get<ReadNotesDataSource>(),
+      ),
+    );
+    i.add<UpdateNoteRepository>(
+      () => UpdateNoteRepositoryImpl(
+        updateNoteDataSource: i.get<UpdateNoteDataSource>(),
+      ),
+    );
+    i.add<DeleteNoteRepository>(
+      () => DeleteNoteRepositoryImpl(
+        deleteNoteDataSource: i.get<DeleteNoteDataSource>(),
       ),
     );
 
@@ -28,11 +48,23 @@ class HomeModule extends Module {
         readNotesRepository: i.get<ReadNotesRepository>(),
       ),
     );
+    i.add<UpdateNoteUseCase>(
+      () => UpdateNoteUseCaseImpl(
+        updateNoteRepository: i.get<UpdateNoteRepository>(),
+      ),
+    );
+    i.add<DeleteNoteUseCase>(
+      () => DeleteNoteUseCaseImpl(
+        deleteNoteRepository: i.get<DeleteNoteRepository>(),
+      ),
+    );
 
     /// Stores Injections.
     i.add<HomeState>(
       () => HomeState(
         readNotesUseCase: i.get<ReadNotesUseCase>(),
+        updateNoteUseCase: i.get<UpdateNoteUseCase>(),
+        deleteNoteUseCase: i.get<DeleteNoteUseCase>(),
       ),
     );
   }

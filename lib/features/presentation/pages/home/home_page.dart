@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../core/core.dart';
 import '../../../data/data.dart';
 import '../../presentation.dart';
 
@@ -60,49 +61,117 @@ class _HomePageState extends State<HomePage> {
         }
 
         if (listOfNotes.isEmpty) {
-          return const Center(child: Text("Empty"));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  AppImages.emptyList,
+                  width: 180,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                  ),
+                  child: Text(
+                    'Ooops...Empty list!',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.grey.shade900,
+                        ),
+                  ),
+                ),
+                Text(
+                  'Add a new Note by clicking the button below.',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.grey.shade700,
+                      ),
+                ),
+              ],
+            ),
+          );
         }
 
         return ListView.builder(
           itemCount: listOfNotes.length,
           itemBuilder: (context, index) {
             NoteModel noteModel = listOfNotes[index];
-            return ListTile(
-              leading: IconButton(
-                icon: noteModel.isCompleted ?? false
-                    ? Icon(
-                        Icons.check_circle,
-                        color: Colors.yellow.shade800,
-                      )
-                    : Icon(
-                        Icons.check_circle_outline,
-                        color: Colors.yellow.shade800,
+            return Dismissible(
+              key: Key(noteModel.uid!),
+              direction: DismissDirection.endToStart,
+              background: Container(
+                color: Colors.red.shade400,
+              ),
+              confirmDismiss: (DismissDirection direction) async {
+                return await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Delete Note?"),
+                      content: const Text(
+                        "This Note will be permanently deleted. Are sure about this?",
                       ),
-                onPressed: () {},
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: const Text("Delete"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              onDismissed: (DismissDirection direction) {
+                homeState.deleteNote(noteModel: noteModel);
+              },
+              child: ListTile(
+                leading: IconButton(
+                  icon: noteModel.isCompleted ?? false
+                      ? Icon(
+                          Icons.check_circle,
+                          color: Colors.yellow.shade800,
+                        )
+                      : Icon(
+                          Icons.check_circle_outline,
+                          color: Colors.yellow.shade800,
+                        ),
+                  onPressed: () {
+                    homeState.updateNote(noteModel: noteModel);
+                  },
+                ),
+                trailing: Text(
+                  noteModel.date!.toDate().toString(),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: 10,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.grey.shade700,
+                        decoration: noteModel.isCompleted ?? false
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                ),
+                title: Text(
+                  noteModel.name ?? "",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 16,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.grey.shade900,
+                        decoration: noteModel.isCompleted ?? false
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                ),
+                onTap: () {},
               ),
-              trailing: Text(
-                noteModel.date!.toDate().toString(),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 10,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.grey.shade700,
-                      decoration: noteModel.isCompleted ?? false
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                    ),
-              ),
-              title: Text(
-                noteModel.name ?? "",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 16,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.grey.shade900,
-                      decoration: noteModel.isCompleted ?? false
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                    ),
-              ),
-              onTap: () {},
             );
           },
         );
