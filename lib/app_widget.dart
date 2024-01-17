@@ -11,7 +11,7 @@ class AppWidget extends StatelessWidget {
       title: 'Fire CRUD',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.yellow,
+          seedColor: Colors.amber,
         ),
         useMaterial3: true,
       ),

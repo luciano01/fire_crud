@@ -15,6 +15,12 @@ class AppModule extends Module {
     r.module(
       "/",
       module: HomeModule(),
+      transition: TransitionType.fadeIn,
+    );
+    r.module(
+      "/registerNote",
+      module: RegisterNoteModule(),
+      transition: TransitionType.leftToRight,
     );
   }
 }
