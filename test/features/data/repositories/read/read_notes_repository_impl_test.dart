@@ -18,7 +18,7 @@ void main() {
 
   test('Should return a List of NoteModel from ReadNotesDataSource.', () async {
     final mockListOfNotesModel = [
-      NoteModel(),
+      NoteModel.empty(),
     ];
 
     when(() => mockReadNotesDataSource.readNotes())

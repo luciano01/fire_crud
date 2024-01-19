@@ -13,7 +13,7 @@ void main() {
   });
 
   test('Should delete a NoteModel from FirebaseFirestore.', () async {
-    final mockNoteModel = NoteModel();
+    final mockNoteModel = NoteModel.empty();
 
     when(() => mockUpdateNoteDataSource.updateNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());

@@ -15,7 +15,7 @@ void main() {
 
   test('Should return a List of NoteModel.', () async {
     final mockListOfNotes = [
-      NoteModel(),
+      NoteModel.empty(),
     ];
 
     when(() => mockReadNotesRepository.readNotes())

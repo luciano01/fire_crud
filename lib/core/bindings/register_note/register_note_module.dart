@@ -71,6 +71,6 @@ class RegisterNoteModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => const RegisterNotePage());
+    r.child('/', child: (context) => RegisterNotePage());
   }
 }

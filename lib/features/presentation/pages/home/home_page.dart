@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
 import '../../../data/data.dart';
@@ -54,6 +55,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.amber.shade500,
         child: const Icon(Icons.add),
         onPressed: () {
           Modular.to.pushNamed("/registerNote");
@@ -155,7 +157,11 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 trailing: Text(
-                  noteModel.date!.toDate().toString(),
+                  DateFormat.yMd(
+                    'en_US',
+                  ).format(
+                    noteModel.date!.toDate(),
+                  ),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: 10,
                         fontStyle: FontStyle.normal,

@@ -2,16 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NoteModel {
   final String? uid;
-  final String? name;
-  final bool? isCompleted;
-  final Timestamp? date;
+  String name;
+  bool isCompleted;
+  Timestamp date;
 
   NoteModel({
     this.uid,
-    this.name,
-    this.isCompleted,
-    this.date,
+    required this.name,
+    required this.isCompleted,
+    required this.date,
   });
+
+  factory NoteModel.empty() {
+    return NoteModel(
+      name: '',
+      isCompleted: false,
+      date: Timestamp.now(),
+    );
+  }
 
   factory NoteModel.fromJson(DocumentSnapshot snapshot) {
     return NoteModel(
@@ -24,9 +32,9 @@ class NoteModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name ?? "",
-      'isCompleted': isCompleted ?? false,
-      'date': date ?? Timestamp.fromDate(DateTime.now()),
+      'name': name,
+      'isCompleted': isCompleted,
+      'date': date,
     };
   }
 

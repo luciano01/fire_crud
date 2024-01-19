@@ -14,7 +14,7 @@ void main() {
 
   test('Should return a List of NoteModel from FirebaseFirestore.', () async {
     final mockListOfNotes = [
-      NoteModel(),
+      NoteModel.empty(),
     ];
 
     when(() => mockReadNotesDataSource.readNotes())

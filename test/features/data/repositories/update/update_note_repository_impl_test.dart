@@ -17,7 +17,7 @@ void main() {
   });
 
   test('Should update a NoteModel from UpdateNoteDataSource.', () async {
-    final mockNoteModel = NoteModel();
+    final mockNoteModel = NoteModel.empty();
 
     when(() => mockUpdateNoteDataSource.updateNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());
