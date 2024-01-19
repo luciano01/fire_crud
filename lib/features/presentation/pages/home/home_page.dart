@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: ListTile(
                 leading: IconButton(
-                  icon: noteModel.isCompleted ?? false
+                  icon: noteModel.isCompleted
                       ? Icon(
                           Icons.check_circle,
                           color: Colors.yellow.shade800,
@@ -160,29 +160,31 @@ class _HomePageState extends State<HomePage> {
                   DateFormat.yMd(
                     'en_US',
                   ).format(
-                    noteModel.date!.toDate(),
+                    noteModel.date.toDate(),
                   ),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: 10,
                         fontStyle: FontStyle.normal,
                         color: Colors.grey.shade700,
-                        decoration: noteModel.isCompleted ?? false
+                        decoration: noteModel.isCompleted
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                 ),
                 title: Text(
-                  noteModel.name ?? "",
+                  noteModel.name,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.normal,
                         color: Colors.grey.shade900,
-                        decoration: noteModel.isCompleted ?? false
+                        decoration: noteModel.isCompleted
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Modular.to.pushNamed("/registerNote", arguments: noteModel);
+                },
               ),
             );
           },

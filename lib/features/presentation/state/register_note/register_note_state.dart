@@ -20,7 +20,18 @@ abstract class RegisterNoteStateBase with Store {
     required DeleteNoteUseCase deleteNoteUseCase,
   })  : _createNoteUseCase = createNoteUseCase,
         _updateNoteUseCase = updateNoteUseCase,
-        _deleteNoteUseCase = deleteNoteUseCase;
+        _deleteNoteUseCase = deleteNoteUseCase {
+    init();
+  }
+
+  void init() {
+    if (Modular.args.data != null) {
+      NoteModel noteByArgs = Modular.args.data;
+      noteModel = noteByArgs;
+      name = noteModel.name;
+      date = noteModel.date;
+    }
+  }
 
   NoteModel noteModel = NoteModel.empty();
 
@@ -43,10 +54,26 @@ abstract class RegisterNoteStateBase with Store {
   @action
   Future<void> saveNote() async {
     try {
-      noteModel.name = name;
-      noteModel.date = date;
+      if (Modular.args.data != null) {
+        NoteModel noteByArgs = Modular.args.data;
+        noteModel = noteByArgs;
+        noteByArgs.name = name;
+        noteByArgs.date = date;
+        await _updateNoteUseCase.updateNote(noteModel: noteByArgs);
+      } else {
+        noteModel.name = name;
+        noteModel.date = date;
 
-      await _createNoteUseCase.createNote(noteModel: noteModel);
+        await _createNoteUseCase.createNote(noteModel: noteModel);
+      }
+      Modular.to.pop();
+    } catch (_) {
+    } finally {}
+  }
+
+  Future<void> deleteNote() async {
+    try {
+      await _deleteNoteUseCase.deleteNote(noteModel: noteModel);
       Modular.to.pop();
     } catch (_) {
     } finally {}
