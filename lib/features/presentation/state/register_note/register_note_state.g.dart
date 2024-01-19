@@ -9,6 +9,22 @@ part of 'register_note_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RegisterNoteState on RegisterNoteStateBase, Store {
+  late final _$isUpdateAtom =
+      Atom(name: 'RegisterNoteStateBase.isUpdate', context: context);
+
+  @override
+  bool get isUpdate {
+    _$isUpdateAtom.reportRead();
+    return super.isUpdate;
+  }
+
+  @override
+  set isUpdate(bool value) {
+    _$isUpdateAtom.reportWrite(value, super.isUpdate, () {
+      super.isUpdate = value;
+    });
+  }
+
   late final _$nameAtom =
       Atom(name: 'RegisterNoteStateBase.name', context: context);
 
@@ -77,6 +93,7 @@ mixin _$RegisterNoteState on RegisterNoteStateBase, Store {
   @override
   String toString() {
     return '''
+isUpdate: ${isUpdate},
 name: ${name},
 date: ${date}
     ''';

@@ -31,9 +31,14 @@ abstract class RegisterNoteStateBase with Store {
       name = noteModel.name;
       date = noteModel.date;
     }
+
+    isUpdate = Modular.args.data != null;
   }
 
   NoteModel noteModel = NoteModel.empty();
+
+  @observable
+  bool isUpdate = false;
 
   @observable
   String name = "";
@@ -54,16 +59,12 @@ abstract class RegisterNoteStateBase with Store {
   @action
   Future<void> saveNote() async {
     try {
-      if (Modular.args.data != null) {
-        NoteModel noteByArgs = Modular.args.data;
-        noteModel = noteByArgs;
-        noteByArgs.name = name;
-        noteByArgs.date = date;
-        await _updateNoteUseCase.updateNote(noteModel: noteByArgs);
-      } else {
-        noteModel.name = name;
-        noteModel.date = date;
+      noteModel.name = name;
+      noteModel.date = date;
 
+      if (Modular.args.data != null) {
+        await _updateNoteUseCase.updateNote(noteModel: noteModel);
+      } else {
         await _createNoteUseCase.createNote(noteModel: noteModel);
       }
       Modular.to.pop();
@@ -73,7 +74,9 @@ abstract class RegisterNoteStateBase with Store {
 
   Future<void> deleteNote() async {
     try {
-      await _deleteNoteUseCase.deleteNote(noteModel: noteModel);
+      if (Modular.args.data != null) {
+        await _deleteNoteUseCase.deleteNote(noteModel: noteModel);
+      }
       Modular.to.pop();
     } catch (_) {
     } finally {}

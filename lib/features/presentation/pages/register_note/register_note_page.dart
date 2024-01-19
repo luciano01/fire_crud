@@ -14,7 +14,44 @@ class RegisterNotePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RegisterNote'),
+        title: Text(registerNoteState.isUpdate ? 'Update Note' : 'Create Note'),
+        actions: [
+          Visibility(
+            visible: registerNoteState.isUpdate,
+            child: IconButton(
+              icon: Icon(
+                Icons.delete_forever_outlined,
+                color: Colors.red.shade400,
+              ),
+              onPressed: () async {
+                return await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Delete Note?"),
+                      content: const Text(
+                        "This Note will be permanently deleted. Are sure about this?",
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            registerNoteState.deleteNote();
+                            Navigator.of(context).pop(true);
+                          },
+                          child: const Text("Delete"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          )
+        ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(
