@@ -8,7 +8,14 @@ class RegisterNoteState = RegisterNoteStateBase with _$RegisterNoteState;
 
 abstract class RegisterNoteStateBase with Store {
   final CreateNoteUseCase _createNoteUseCase;
+  final UpdateNoteUseCase _updateNoteUseCase;
+  final DeleteNoteUseCase _deleteNoteUseCase;
 
-  RegisterNoteStateBase({required CreateNoteUseCase createNoteUseCase})
-      : _createNoteUseCase = createNoteUseCase;
+  RegisterNoteStateBase({
+    required CreateNoteUseCase createNoteUseCase,
+    required UpdateNoteUseCase updateNoteUseCase,
+    required DeleteNoteUseCase deleteNoteUseCase,
+  })  : _createNoteUseCase = createNoteUseCase,
+        _updateNoteUseCase = updateNoteUseCase,
+        _deleteNoteUseCase = deleteNoteUseCase;
 }

@@ -14,11 +14,31 @@ class RegisterNoteModule extends Module {
         firebaseFirestore: i.get<FirebaseFirestore>(),
       ),
     );
+    i.add<UpdateNoteDataSource>(
+      () => UpdateNoteDataSourceImpl(
+        firebaseFirestore: i.get<FirebaseFirestore>(),
+      ),
+    );
+    i.add<DeleteNoteDataSource>(
+      () => DeleteNoteDataSourceImpl(
+        firebaseFirestore: i.get<FirebaseFirestore>(),
+      ),
+    );
 
     /// Repositories injections.
     i.add<CreateNoteRepository>(
       () => CreateNoteRepositoryImpl(
         createNoteDataSource: i.get<CreateNoteDataSource>(),
+      ),
+    );
+    i.add<UpdateNoteRepository>(
+      () => UpdateNoteRepositoryImpl(
+        updateNoteDataSource: i.get<UpdateNoteDataSource>(),
+      ),
+    );
+    i.add<DeleteNoteRepository>(
+      () => DeleteNoteRepositoryImpl(
+        deleteNoteDataSource: i.get<DeleteNoteDataSource>(),
       ),
     );
 
@@ -28,11 +48,23 @@ class RegisterNoteModule extends Module {
         createNoteRepository: i.get<CreateNoteRepository>(),
       ),
     );
+    i.add<UpdateNoteUseCase>(
+      () => UpdateNoteUseCaseImpl(
+        updateNoteRepository: i.get<UpdateNoteRepository>(),
+      ),
+    );
+    i.add<DeleteNoteUseCase>(
+      () => DeleteNoteUseCaseImpl(
+        deleteNoteRepository: i.get<DeleteNoteRepository>(),
+      ),
+    );
 
     /// Stores Injections.
     i.add<RegisterNoteState>(
       () => RegisterNoteState(
         createNoteUseCase: i.get<CreateNoteUseCase>(),
+        updateNoteUseCase: i.get<UpdateNoteUseCase>(),
+        deleteNoteUseCase: i.get<DeleteNoteUseCase>(),
       ),
     );
   }
