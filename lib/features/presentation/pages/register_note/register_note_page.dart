@@ -94,10 +94,10 @@ class RegisterNotePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Observer(builder: (_) {
-                return Text(registerNoteState.name);
+                return Text(registerNoteState.title);
               }),
               Text(
-                'Name Note',
+                'Title',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -128,15 +128,60 @@ class RegisterNotePage extends StatelessWidget {
                         color: Colors.yellow.shade900,
                       ),
                     ),
-                    hintText: 'Add Note Name...',
+                    hintText: 'Add Note Title...',
                     hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.normal,
                           fontStyle: FontStyle.normal,
                           color: Colors.grey.shade700,
                         ),
                   ),
-                  onChanged: (value) => registerNoteState.changeName(value),
-                  initialValue: registerNoteState.name,
+                  onChanged: (value) => registerNoteState.changeTitle(value),
+                  initialValue: registerNoteState.title,
+                );
+              }),
+              const SizedBox(height: 16),
+              Text(
+                'Description',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.grey.shade900,
+                    ),
+              ),
+              Observer(builder: (_) {
+                return TextFormField(
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.yellow.shade900,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.grey.shade900,
+                      ),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.yellow.shade800,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.yellow.shade900,
+                      ),
+                    ),
+                    hintText: 'Add Note Description...',
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.grey.shade700,
+                        ),
+                  ),
+                  onChanged: (value) =>
+                      registerNoteState.changeDescriptin(value),
+                  initialValue: registerNoteState.description,
                 );
               }),
             ],

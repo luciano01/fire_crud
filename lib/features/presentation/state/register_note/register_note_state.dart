@@ -21,14 +21,15 @@ abstract class RegisterNoteStateBase with Store {
   })  : _createNoteUseCase = createNoteUseCase,
         _updateNoteUseCase = updateNoteUseCase,
         _deleteNoteUseCase = deleteNoteUseCase {
-    init();
+    _init();
   }
 
-  void init() {
+  void _init() {
     if (Modular.args.data != null) {
       NoteModel noteByArgs = Modular.args.data;
       noteModel = noteByArgs;
-      name = noteModel.name;
+      title = noteModel.title;
+      description = noteModel.description;
       date = noteModel.date;
     }
 
@@ -41,14 +42,22 @@ abstract class RegisterNoteStateBase with Store {
   bool isUpdate = false;
 
   @observable
-  String name = "";
+  String title = "";
+
+  @observable
+  String description = "";
 
   @observable
   Timestamp date = Timestamp.now();
 
   @action
-  void changeName(String value) {
-    name = value;
+  void changeTitle(String value) {
+    title = value;
+  }
+
+  @action
+  void changeDescriptin(String value) {
+    description = value;
   }
 
   @action
@@ -59,7 +68,8 @@ abstract class RegisterNoteStateBase with Store {
   @action
   Future<void> saveNote() async {
     try {
-      noteModel.name = name;
+      noteModel.title = title;
+      noteModel.description = description;
       noteModel.date = date;
 
       if (Modular.args.data != null) {

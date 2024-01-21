@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 
+import '../../../../core/core.dart';
 import '../../../data/data.dart';
 import '../../../domain/domain.dart';
 
@@ -19,14 +20,30 @@ abstract class HomeStateBase with Store {
   })  : _readNotesUseCase = readNotesUseCase,
         _updateNoteUseCase = updateNoteUseCase,
         _deleteNoteUseCase = deleteNoteUseCase {
-    readNotes();
+    _readNotes();
   }
+
+  @observable
+  bool isLoading = false;
+
+  @observable
+  String? errorMessage;
 
   @observable
   ObservableStream<List<NoteModel>>? listOfNotes;
 
-  Future<void> readNotes() async {
-    listOfNotes = _readNotesUseCase.readNotes().asObservable();
+  @action
+  Future<void> _readNotes() async {
+    isLoading = true;
+    Future.delayed(const Duration(seconds: 3)).whenComplete(() async {
+      try {
+        listOfNotes = _readNotesUseCase.readNotes().asObservable();
+      } on ServerException catch (error) {
+        errorMessage = error.errorMessage;
+      } finally {
+        isLoading = false;
+      }
+    });
   }
 
   Future<void> updateNote({required NoteModel noteModel}) async {

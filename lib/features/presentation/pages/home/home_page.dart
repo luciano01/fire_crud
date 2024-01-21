@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../../../core/core.dart';
 import '../../../data/data.dart';
@@ -16,6 +17,39 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homeState = Modular.get<HomeState>();
+
+  @override
+  void initState() {
+    reaction((_) => homeState.errorMessage, (hasError) {
+      if (hasError != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red.shade400,
+            content: Row(
+              children: [
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.white,
+                ),
+                const SizedBox(width: 10),
+                Expanded(child: Text(homeState.errorMessage!)),
+              ],
+            ),
+            action: SnackBarAction(
+              label: 'Try Again',
+              textColor: Colors.white,
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +96,11 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       body: Observer(builder: (_) {
-        List<NoteModel>? listOfNotes = homeState.listOfNotes!.value;
+        List<NoteModel>? listOfNotes = homeState.listOfNotes?.value;
 
-        if (listOfNotes == null) {
-          return const Center(child: Text("Null"));
-        }
-
-        if (listOfNotes.isEmpty) {
+        if (listOfNotes == null || homeState.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (listOfNotes.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -114,6 +146,16 @@ class _HomePageState extends State<HomePage> {
               direction: DismissDirection.endToStart,
               background: Container(
                 color: Colors.red.shade400,
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 16),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
               confirmDismiss: (DismissDirection direction) async {
                 return await showDialog(
@@ -172,9 +214,19 @@ class _HomePageState extends State<HomePage> {
                       ),
                 ),
                 title: Text(
-                  noteModel.name,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  noteModel.title,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.grey.shade900,
+                        decoration: noteModel.isCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                ),
+                subtitle: Text(
+                  noteModel.description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontStyle: FontStyle.normal,
                         color: Colors.grey.shade900,
                         decoration: noteModel.isCompleted

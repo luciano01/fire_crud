@@ -25,19 +25,35 @@ mixin _$RegisterNoteState on RegisterNoteStateBase, Store {
     });
   }
 
-  late final _$nameAtom =
-      Atom(name: 'RegisterNoteStateBase.name', context: context);
+  late final _$titleAtom =
+      Atom(name: 'RegisterNoteStateBase.title', context: context);
 
   @override
-  String get name {
-    _$nameAtom.reportRead();
-    return super.name;
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
   }
 
   @override
-  set name(String value) {
-    _$nameAtom.reportWrite(value, super.name, () {
-      super.name = value;
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  late final _$descriptionAtom =
+      Atom(name: 'RegisterNoteStateBase.description', context: context);
+
+  @override
+  String get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(String value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
     });
   }
 
@@ -69,11 +85,22 @@ mixin _$RegisterNoteState on RegisterNoteStateBase, Store {
       ActionController(name: 'RegisterNoteStateBase', context: context);
 
   @override
-  void changeName(String value) {
+  void changeTitle(String value) {
     final _$actionInfo = _$RegisterNoteStateBaseActionController.startAction(
-        name: 'RegisterNoteStateBase.changeName');
+        name: 'RegisterNoteStateBase.changeTitle');
     try {
-      return super.changeName(value);
+      return super.changeTitle(value);
+    } finally {
+      _$RegisterNoteStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeDescriptin(String value) {
+    final _$actionInfo = _$RegisterNoteStateBaseActionController.startAction(
+        name: 'RegisterNoteStateBase.changeDescriptin');
+    try {
+      return super.changeDescriptin(value);
     } finally {
       _$RegisterNoteStateBaseActionController.endAction(_$actionInfo);
     }
@@ -94,7 +121,8 @@ mixin _$RegisterNoteState on RegisterNoteStateBase, Store {
   String toString() {
     return '''
 isUpdate: ${isUpdate},
-name: ${name},
+title: ${title},
+description: ${description},
 date: ${date}
     ''';
   }
