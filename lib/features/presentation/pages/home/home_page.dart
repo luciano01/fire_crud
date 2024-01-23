@@ -199,14 +199,15 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 trailing: Text(
-                  DateFormat.yMd(
+                  DateFormat.yMMMd(
                     'en_US',
                   ).format(
                     noteModel.date.toDate(),
                   ),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: 10,
-                        fontStyle: FontStyle.normal,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
                         color: Colors.grey.shade700,
                         decoration: noteModel.isCompleted
                             ? TextDecoration.lineThrough
