@@ -30,7 +30,7 @@ abstract class HomeStateBase with Store {
   String? errorMessage;
 
   @observable
-  ObservableStream<List<NoteModel>>? listOfNotes;
+  ObservableStream<List<Note>>? listOfNotes;
 
   @action
   Future<void> _readNotes() async {
@@ -46,14 +46,14 @@ abstract class HomeStateBase with Store {
     });
   }
 
-  Future<void> updateNote({required NoteModel noteModel}) async {
-    NoteModel newNoteModel = noteModel.copyWith(
+  Future<void> updateNote({required Note noteModelToUpdate}) async {
+    /* NoteModel newNoteModel = noteModel.copyWith(
       isCompleted: !noteModel.isCompleted,
-    );
-    await _updateNoteUseCase.updateNote(noteModel: newNoteModel);
+    ); */
+    await _updateNoteUseCase.updateNote(noteModel: noteModelToUpdate);
   }
 
-  Future<void> deleteNote({required NoteModel noteModel}) async {
+  Future<void> deleteNote({required Note noteModel}) async {
     await _deleteNoteUseCase.deleteNote(noteModel: noteModel);
   }
 }

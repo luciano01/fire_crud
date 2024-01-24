@@ -10,7 +10,7 @@ class UpdateNoteDataSourceImpl implements UpdateNoteDataSource {
       : _firebaseFirestore = firebaseFirestore;
 
   @override
-  Future<void> updateNote({required NoteModel noteModel}) async {
+  Future<void> updateNote({required Note noteModel}) async {
     final noteUid =
         _firebaseFirestore.collection("notes").doc(noteModel.uid).id;
 

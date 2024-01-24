@@ -20,7 +20,7 @@ void main() {
   });
 
   test('Should return a DocumentReference.', () async {
-    final mockNoteModel = NoteModel.empty();
+    final mockNoteModel = Note();
 
     when(() => mockCreateNoteDataSource.createNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => mockDocumentReference);

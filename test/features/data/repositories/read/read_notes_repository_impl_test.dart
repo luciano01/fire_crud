@@ -18,7 +18,7 @@ void main() {
 
   test('Should return a List of NoteModel from ReadNotesDataSource.', () async {
     final mockListOfNotesModel = [
-      NoteModel.empty(),
+      Note(),
     ];
 
     when(() => mockReadNotesDataSource.readNotes())
@@ -26,7 +26,7 @@ void main() {
 
     final result = readNotesRepositoryImpl.readNotes();
 
-    expect(result, isA<Stream<List<NoteModel>>>());
+    expect(result, isA<Stream<List<Note>>>());
     verify(() => mockReadNotesDataSource.readNotes());
     verifyNoMoreInteractions(mockReadNotesDataSource);
   });

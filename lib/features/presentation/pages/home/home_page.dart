@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       body: Observer(builder: (_) {
-        List<NoteModel>? listOfNotes = homeState.listOfNotes?.value;
+        List<Note>? listOfNotes = homeState.listOfNotes?.value;
 
         if (listOfNotes == null || homeState.isLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
         return ListView.builder(
           itemCount: listOfNotes.length,
           itemBuilder: (context, index) {
-            NoteModel noteModel = listOfNotes[index];
+            Note noteModel = listOfNotes[index];
             return Dismissible(
               key: Key(noteModel.uid!),
               direction: DismissDirection.endToStart,
@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: ListTile(
                 leading: IconButton(
-                  icon: noteModel.isCompleted
+                  icon: noteModel.isCompleted!
                       ? Icon(
                           Icons.check_circle,
                           color: Colors.yellow.shade800,
@@ -195,48 +195,51 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.yellow.shade800,
                         ),
                   onPressed: () {
-                    homeState.updateNote(noteModel: noteModel);
+                    homeState.updateNote(noteModelToUpdate: noteModel);
                   },
                 ),
                 trailing: Text(
                   DateFormat.yMMMd(
                     'en_US',
                   ).format(
-                    noteModel.date.toDate(),
+                    noteModel.date!.toDate(),
                   ),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: 10,
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey.shade700,
-                        decoration: noteModel.isCompleted
+                        decoration: noteModel.isCompleted!
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                 ),
                 title: Text(
-                  noteModel.title,
+                  noteModel.title!,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.normal,
                         color: Colors.grey.shade900,
-                        decoration: noteModel.isCompleted
+                        decoration: noteModel.isCompleted!
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                 ),
                 subtitle: Text(
-                  noteModel.description,
+                  noteModel.description!,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontStyle: FontStyle.normal,
                         color: Colors.grey.shade900,
-                        decoration: noteModel.isCompleted
+                        decoration: noteModel.isCompleted!
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                 ),
                 onTap: () {
-                  Modular.to.pushNamed("/registerNote", arguments: noteModel);
+                  Modular.to.pushNamed(
+                    "/registerNote/",
+                    arguments: noteModel,
+                  );
                 },
               ),
             );

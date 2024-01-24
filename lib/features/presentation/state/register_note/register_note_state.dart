@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -25,53 +24,50 @@ abstract class RegisterNoteStateBase with Store {
   }
 
   void _init() {
-    if (Modular.args.data != null) {
-      NoteModel noteByArgs = Modular.args.data;
-      noteModel = noteByArgs;
-      title = noteModel.title;
-      description = noteModel.description;
-      date = noteModel.date;
-    }
-
     isUpdate = Modular.args.data != null;
+
+    if (isUpdate) {
+      Note toUpdateNote = Modular.args.data;
+      noteModel.uid = toUpdateNote.uid;
+      noteModel.title = toUpdateNote.title;
+      noteModel.description = toUpdateNote.description;
+      noteModel.isCompleted = toUpdateNote.isCompleted;
+      noteModel.date = toUpdateNote.date;
+    } else {
+      return;
+    }
   }
 
-  NoteModel noteModel = NoteModel.empty();
+  @observable
+  Note noteModel = Note();
 
   @observable
   bool isUpdate = false;
 
-  @observable
-  String title = "";
+  @computed
+  bool get isValid => validateTitle() == null && validateDescription() == null;
 
-  @observable
-  String description = "";
-
-  @observable
-  Timestamp date = Timestamp.now();
-
-  @action
-  void changeTitle(String value) {
-    title = value;
+  String? validateTitle() {
+    if (noteModel.title == null) {
+      return null;
+    } else if (noteModel.title!.isEmpty || noteModel.title!.length < 3) {
+      return "Este campo é obrigatório";
+    }
+    return null;
   }
 
-  @action
-  void changeDescriptin(String value) {
-    description = value;
+  String? validateDescription() {
+    if (noteModel.description == null) {
+      return null;
+    } else if (noteModel.description!.isEmpty ||
+        noteModel.description!.length < 3) {
+      return "Este campo é obrigatório";
+    }
+    return null;
   }
 
-  @action
-  void changeDate(DateTime value) {
-    date = Timestamp.fromDate(value);
-  }
-
-  @action
   Future<void> saveNote() async {
     try {
-      noteModel.title = title;
-      noteModel.description = description;
-      noteModel.date = date;
-
       if (Modular.args.data != null) {
         await _updateNoteUseCase.updateNote(noteModel: noteModel);
       } else {

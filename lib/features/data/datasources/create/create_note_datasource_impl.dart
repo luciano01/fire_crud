@@ -11,7 +11,7 @@ class CreateNoteDataSourceImpl implements CreateNoteDataSource {
 
   @override
   Future<void> createNote({
-    required NoteModel noteModel,
+    required Note noteModel,
   }) async {
     if (noteModel.uid == null) {
       await _firebaseFirestore.collection("notes").add(noteModel.toJson());

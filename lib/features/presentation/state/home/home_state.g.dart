@@ -45,13 +45,13 @@ mixin _$HomeState on HomeStateBase, Store {
       Atom(name: 'HomeStateBase.listOfNotes', context: context);
 
   @override
-  ObservableStream<List<NoteModel>>? get listOfNotes {
+  ObservableStream<List<Note>>? get listOfNotes {
     _$listOfNotesAtom.reportRead();
     return super.listOfNotes;
   }
 
   @override
-  set listOfNotes(ObservableStream<List<NoteModel>>? value) {
+  set listOfNotes(ObservableStream<List<Note>>? value) {
     _$listOfNotesAtom.reportWrite(value, super.listOfNotes, () {
       super.listOfNotes = value;
     });

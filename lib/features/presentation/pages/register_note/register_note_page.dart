@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -63,8 +64,15 @@ class RegisterNotePage extends StatelessWidget {
             minimumSize: MaterialStateProperty.all<Size>(
               Size(MediaQuery.of(context).size.width, 48),
             ),
-            backgroundColor: MaterialStateProperty.all<Color>(
-              Colors.amber.shade500,
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed)) {
+                  return Colors.amber.shade500;
+                } else if (states.contains(MaterialState.disabled)) {
+                  return Colors.grey.shade400;
+                }
+                return Colors.amber.shade500;
+              },
             ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
@@ -72,6 +80,9 @@ class RegisterNotePage extends StatelessWidget {
               ),
             ),
           ),
+          onPressed: registerNoteState.isValid
+              ? () => registerNoteState.saveNote()
+              : null,
           child: Text(
             'Save',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -81,7 +92,6 @@ class RegisterNotePage extends StatelessWidget {
                   color: Colors.grey.shade50,
                 ),
           ),
-          onPressed: () => registerNoteState.saveNote(),
         ),
       ),
       body: ListView(
@@ -93,9 +103,6 @@ class RegisterNotePage extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Observer(builder: (_) {
-                return Text(registerNoteState.title);
-              }),
               Text(
                 'Title',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -134,9 +141,11 @@ class RegisterNotePage extends StatelessWidget {
                           fontStyle: FontStyle.normal,
                           color: Colors.grey.shade700,
                         ),
+                    errorText: registerNoteState.validateTitle(),
                   ),
-                  onChanged: (value) => registerNoteState.changeTitle(value),
-                  initialValue: registerNoteState.title,
+                  onChanged: (value) =>
+                      registerNoteState.noteModel.setTitle(value),
+                  initialValue: registerNoteState.noteModel.title,
                 );
               }),
               const SizedBox(height: 16),
@@ -178,10 +187,11 @@ class RegisterNotePage extends StatelessWidget {
                           fontStyle: FontStyle.normal,
                           color: Colors.grey.shade700,
                         ),
+                    errorText: registerNoteState.validateDescription(),
                   ),
                   onChanged: (value) =>
-                      registerNoteState.changeDescriptin(value),
-                  initialValue: registerNoteState.description,
+                      registerNoteState.noteModel.setDescription(value),
+                  initialValue: registerNoteState.noteModel.description,
                 );
               }),
             ],
@@ -223,7 +233,8 @@ class RegisterNotePage extends StatelessWidget {
                     DateFormat.yMd(
                       'en_US',
                     ).format(
-                      registerNoteState.date.toDate(),
+                      registerNoteState.noteModel.date?.toDate() ??
+                          DateTime.now(),
                     ),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: 14,
@@ -235,7 +246,8 @@ class RegisterNotePage extends StatelessWidget {
                   onPressed: () async {
                     DateTime? picked = await showDatePicker(
                       context: context,
-                      initialDate: registerNoteState.date.toDate(),
+                      initialDate: registerNoteState.noteModel.date?.toDate() ??
+                          DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2030),
                       builder: (context, child) {
@@ -243,7 +255,9 @@ class RegisterNotePage extends StatelessWidget {
                       },
                     );
                     if (picked != null) {
-                      registerNoteState.changeDate(picked);
+                      registerNoteState.noteModel.setDate(
+                        Timestamp.fromDate(picked),
+                      );
                     }
                   },
                 );

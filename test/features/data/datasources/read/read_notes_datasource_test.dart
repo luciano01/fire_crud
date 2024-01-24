@@ -14,7 +14,7 @@ void main() {
 
   test('Should return a List of NoteModel from FirebaseFirestore.', () async {
     final mockListOfNotes = [
-      NoteModel.empty(),
+      Note(),
     ];
 
     when(() => mockReadNotesDataSource.readNotes())
@@ -22,6 +22,6 @@ void main() {
 
     final result = mockReadNotesDataSource.readNotes();
 
-    expect(result, isA<Stream<List<NoteModel>>>());
+    expect(result, isA<Stream<List<Note>>>());
   });
 }

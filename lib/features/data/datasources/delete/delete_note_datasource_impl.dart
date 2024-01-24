@@ -10,7 +10,7 @@ class DeleteNoteDataSourceImpl implements DeleteNoteDataSource {
       : _firebaseFirestore = firebaseFirestore;
 
   @override
-  Future<void> deleteNote({required NoteModel noteModel}) async {
+  Future<void> deleteNote({required Note noteModel}) async {
     final noteModelUid =
         _firebaseFirestore.collection("notes").doc(noteModel.uid).id;
 

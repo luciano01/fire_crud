@@ -17,7 +17,7 @@ void main() {
   });
 
   test('Should create a NoteEntity from CreateNoteDataSource.', () async {
-    final mockNoteModel = NoteModel.empty();
+    final mockNoteModel = Note();
 
     when(() => mockCreateNoteDataSource.createNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());

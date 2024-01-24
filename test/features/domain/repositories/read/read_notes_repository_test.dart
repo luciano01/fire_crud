@@ -15,7 +15,7 @@ void main() {
 
   test('Should return a List of NoteModel.', () async {
     final mockListOfNotes = [
-      NoteModel.empty(),
+      Note(),
     ];
 
     when(() => mockReadNotesRepository.readNotes())
@@ -23,6 +23,6 @@ void main() {
 
     final result = mockReadNotesRepository.readNotes();
 
-    expect(result, isA<Stream<List<NoteModel>>>());
+    expect(result, isA<Stream<List<Note>>>());
   });
 }

@@ -8,7 +8,7 @@ class CreateNoteRepositoryImpl implements CreateNoteRepository {
       : _createNoteDataSource = createNoteDataSource;
 
   @override
-  Future<void> createNote({required NoteModel noteModel}) async {
+  Future<void> createNote({required Note noteModel}) async {
     await _createNoteDataSource.createNote(noteModel: noteModel);
   }
 }

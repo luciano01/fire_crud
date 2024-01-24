@@ -18,7 +18,7 @@ void main() {
   });
 
   test('Should delete a NoteModel from DeleteNoteRepository.', () async {
-    final mockNoteModel = NoteModel.empty();
+    final mockNoteModel = Note();
 
     when(() => mockDeleteNoteRepository.deleteNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());

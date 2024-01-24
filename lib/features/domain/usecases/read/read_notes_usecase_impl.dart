@@ -3,7 +3,7 @@ import '../../../data/data.dart';
 
 abstract class ReadNotesUseCase {
   /// Return a List of NoteModel.
-  Stream<List<NoteModel>> readNotes();
+  Stream<List<Note>> readNotes();
 }
 
 class ReadNotesUseCaseImp implements ReadNotesUseCase {
@@ -13,7 +13,7 @@ class ReadNotesUseCaseImp implements ReadNotesUseCase {
       : _readNotesRepository = readNotesRepository;
 
   @override
-  Stream<List<NoteModel>> readNotes() {
+  Stream<List<Note>> readNotes() {
     return _readNotesRepository.readNotes();
   }
 }

@@ -3,7 +3,7 @@ import '../../domain.dart';
 
 abstract class DeleteNoteUseCase {
   /// Delete a NoteEntity.
-  Future<void> deleteNote({required NoteModel noteModel});
+  Future<void> deleteNote({required Note noteModel});
 }
 
 class DeleteNoteUseCaseImpl implements DeleteNoteUseCase {
@@ -13,7 +13,7 @@ class DeleteNoteUseCaseImpl implements DeleteNoteUseCase {
       : _deleteNoteRepository = deleteNoteRepository;
 
   @override
-  Future<void> deleteNote({required NoteModel noteModel}) async {
+  Future<void> deleteNote({required Note noteModel}) async {
     await _deleteNoteRepository.deleteNote(noteModel: noteModel);
   }
 }

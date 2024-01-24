@@ -13,7 +13,7 @@ void main() {
   });
 
   test('Should delete a NoteModel.', () async {
-    final mockNoteModel = NoteModel.empty();
+    final mockNoteModel = Note();
 
     when(() => mockDeleteTaskDataSource.deleteNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());

@@ -14,7 +14,7 @@ void main() {
   });
 
   test('Should create a NoteModel.', () async {
-    final mockNoteModel = NoteModel.empty();
+    final mockNoteModel = Note();
 
     when(() => mockCreateNoteRepository.createNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value);

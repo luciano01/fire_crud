@@ -18,7 +18,7 @@ void main() {
   });
 
   test('Should update a NoteModel from UpdateNoteRepository.', () async {
-    final mockNoteModel = NoteModel.empty();
+    final mockNoteModel = Note();
 
     when(() => mockUpdateNoteRepository.updateNote(noteModel: mockNoteModel))
         .thenAnswer((_) async => Future.value());

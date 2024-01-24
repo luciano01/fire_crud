@@ -8,7 +8,7 @@ class DeleteNoteRepositoryImpl implements DeleteNoteRepository {
       : _deleteNoteDataSource = deleteNoteDataSource;
 
   @override
-  Future<void> deleteNote({required NoteModel noteModel}) async {
+  Future<void> deleteNote({required Note noteModel}) async {
     await _deleteNoteDataSource.deleteNote(noteModel: noteModel);
   }
 }

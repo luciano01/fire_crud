@@ -3,7 +3,7 @@ import '../../domain.dart';
 
 abstract class UpdateNoteUseCase {
   /// Update a NoteEntity.
-  Future<void> updateNote({required NoteModel noteModel});
+  Future<void> updateNote({required Note noteModel});
 }
 
 class UpdateNoteUseCaseImpl implements UpdateNoteUseCase {
@@ -13,7 +13,7 @@ class UpdateNoteUseCaseImpl implements UpdateNoteUseCase {
       : _updateNoteRepository = updateNoteRepository;
 
   @override
-  Future<void> updateNote({required NoteModel noteModel}) async {
+  Future<void> updateNote({required Note noteModel}) async {
     await _updateNoteRepository.updateNote(noteModel: noteModel);
   }
 }

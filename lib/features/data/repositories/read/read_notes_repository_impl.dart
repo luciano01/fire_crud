@@ -9,7 +9,7 @@ class ReadNotesRepositoryImpl implements ReadNotesRepository {
       : _readNotesDataSource = readNotesDataSource;
 
   @override
-  Stream<List<NoteModel>> readNotes() {
+  Stream<List<Note>> readNotes() {
     return _readNotesDataSource.readNotes();
   }
 }

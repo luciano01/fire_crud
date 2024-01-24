@@ -10,11 +10,11 @@ class ReadNotesDataSourceImpl implements ReadNotesDataSource {
       : _firebaseFirestore = firebaseFirestore;
 
   @override
-  Stream<List<NoteModel>> readNotes() {
+  Stream<List<Note>> readNotes() {
     try {
       return _firebaseFirestore.collection("notes").snapshots().map(
           (snapshot) => snapshot.docs
-              .map((document) => NoteModel.fromJson(document))
+              .map((document) => Note.fromJson(document))
               .toList());
     } catch (e) {
       throw ServerException(errorMessage: "Error to read all NotesModel.");
