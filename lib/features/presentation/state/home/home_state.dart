@@ -47,9 +47,7 @@ abstract class HomeStateBase with Store {
   }
 
   Future<void> updateNote({required Note noteModelToUpdate}) async {
-    /* NoteModel newNoteModel = noteModel.copyWith(
-      isCompleted: !noteModel.isCompleted,
-    ); */
+    noteModelToUpdate.isCompleted = !noteModelToUpdate.isCompleted!;
     await _updateNoteUseCase.updateNote(noteModel: noteModelToUpdate);
   }
 
